@@ -1,2 +1,2 @@
-# Crwn Clothing - React App (Redux)
- Clothing Retail Website - React JS (with Redux)
+# Crwn Clothing - React App (Redux-Saga)
+ Clothing Retail Website - React JS (with Redux-Saga)
