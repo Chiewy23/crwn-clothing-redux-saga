@@ -6,7 +6,7 @@ import Checkout from "./routes/checkout/checkout.component";
 
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import { onAuthStateChangedListener, createUserDocumentFromAuth } from "./utilities/firebase/firebase.utils";
+import { onAuthStateChangedListener, createUserDocumentFromAuth, getCurrentUser } from "./utilities/firebase/firebase.utils";
 import { setCurrentUser } from "./store/user/user.action";
 import { useDispatch } from "react-redux";
 
@@ -14,16 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-        
-        if (user) {
-            createUserDocumentFromAuth(user);
-        }
-
-        dispatch(setCurrentUser(user));
-    });
-
-      return unsubscribe;
+    getCurrentUser().then(user => true)
   }, [dispatch]); // In reality dispatch doesn't change, this is just to remove linting warnings.
 
   return (
