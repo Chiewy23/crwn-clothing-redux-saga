@@ -11,14 +11,14 @@ export function* isUserAuthenticated() {
             return;
         }
 
-        
+
     } catch (error) {
 
     }
 };
 
 export function* onCheckUserSession() {
-    yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, ...)
+    yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, null);
 };
 
 export function* userSagas() {
