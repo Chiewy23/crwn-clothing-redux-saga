@@ -14,7 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getCurrentUser().then(user => true)
+    getCurrentUser().then(user => true);
   }, [dispatch]); // In reality dispatch doesn't change, this is just to remove linting warnings.
 
   return (
