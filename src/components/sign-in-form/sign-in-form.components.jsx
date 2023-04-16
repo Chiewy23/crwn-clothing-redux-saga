@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { SignUpContainer, ButtonsContainer } from "./sign-in-form.styles";
+import { useDispatch } from "react-redux";
+import { googleSignInStart } from "../../store/user/user.action";
 import { 
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword
@@ -16,13 +18,14 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+    const dispatch = useDispatch();
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     };
 
     const signInWithGoogle = async () => {
-        return await signInWithGooglePopup();
+        dispatch(googleSignInStart());
     };
 
     const handleSubmit = async (event) => {
