@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { 
-    createAuthUserWithEmailAndPassword,
-    createUserDocumentFromAuth 
-} from "../../utilities/firebase/firebase.utils";
 import { SignUpContainer } from "./sign-up-form.styles";
 import { signUpStart } from "../../store/user/user.action";
 import { useDispatch } from "react-redux";
