@@ -10,7 +10,7 @@ import createSagaMiddleware from "redux-saga";
 const persistConfig = {
     key: "root",        // persist everything
     storage: storage,   // use browser localStorage
-    whitelist: ["cart"]
+    blacklist: ["categories, user"]
 };
 
 const sagaMiddleware = createSagaMiddleware();

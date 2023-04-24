@@ -1,7 +1,20 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import { USER_ACTION_TYPES } from "./user.types";
-import { signInSuccess, signInFailure, signUpSuccess, signUpFailure, signOutSuccess, signOutFailure } from "./user.action";
-import { getCurrentUser, createUserDocumentFromAuth, signInWithGooglePopup, signInAuthUserWithEmailAndPassword, createAuthUserWithEmailAndPassword, signOutUser } from "../../utilities/firebase/firebase.utils";
+import { 
+    signInSuccess, 
+    signInFailure, 
+    signUpSuccess, 
+    signUpFailure, 
+    signOutSuccess,
+    signOutFailure } from "./user.action";
+
+import { 
+    getCurrentUser, 
+    createUserDocumentFromAuth, 
+    signInWithGooglePopup, 
+    signInAuthUserWithEmailAndPassword, 
+    createAuthUserWithEmailAndPassword, 
+    signOutUser } from "../../utilities/firebase/firebase.utils";
 
 
 
@@ -51,7 +64,7 @@ export function* signUp({ payload: { email, password, displayName }}) {
         const { user } = yield call(createAuthUserWithEmailAndPassword, email, password);
         yield put(signUpSuccess(user, { displayName }));
     } catch (error) {
-        yield put(signUpFailure);
+        yield put(signUpFailure(error));
     }
 };
 
@@ -89,7 +102,7 @@ export function* onSignUpSuccess() {
     yield takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp);
 };
 
-export function* onSignOut() {
+export function* onSignOutStart() {
     yield takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut);
 };
 
@@ -99,6 +112,7 @@ export function* userSagas() {
         call(onGoogleSignInStart),
         call(onEmailSignInStart),
         call(onSignUpStart),
-        call(onSignUpSuccess)
+        call(onSignUpSuccess),
+        call(onSignOutStart)
     ]);
 };
