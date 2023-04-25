@@ -75,7 +75,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) 
     const userDocRef = doc(db, 'users', userAuth.uid);
     const userSnapshot = await getDoc(userDocRef);
     
-    if (!userSnapshot.exists()) {
+    if (!userSnapshot) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
 
@@ -86,7 +86,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) 
         }
     }
 
-    return userDocRef;
+    return userSnapshot;
 };
 
 
@@ -104,7 +104,7 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
         return;
     }
 
-    return signInWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password);
 };
 
 export const signOutUser = async () => await signOut(auth);
