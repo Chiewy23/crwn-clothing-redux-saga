@@ -1,6 +1,10 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectCartTotal } from "../../store/cart/cart.selector";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 import Button from "../button/button.component";
 
@@ -9,6 +13,8 @@ const PaymentForm = () => {
 
     const stripe = useStripe();
     const elements = useElements();
+    const amount = useSelector(selectCartTotal);
+    const currentUser = useSelector(selectCurrentUser);
 
     const paymentHandler = async (e) => {
         e.preventDefault();
@@ -22,7 +28,7 @@ const PaymentForm = () => {
             headers: {
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ amount: 10000 })
+            body: JSON.stringify({ amount: amount * 100 })
         }).then(res => res.json());
 
         const clientSecret = response.paymentIntent.client_secret;
@@ -30,7 +36,7 @@ const PaymentForm = () => {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
-                    name: "Dobby Elf"
+                    name: currentUser ? currentUser.displayName : "Guest"
                 }
             }
         });
