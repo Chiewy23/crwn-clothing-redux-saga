@@ -15,6 +15,7 @@ const PaymentForm = () => {
     const elements = useElements();
     const amount = useSelector(selectCartTotal);
     const currentUser = useSelector(selectCurrentUser);
+    const [isProcessingPayment, setIsProcessingPayment ] = useState(false);
 
     const paymentHandler = async (e) => {
         e.preventDefault();
@@ -22,6 +23,8 @@ const PaymentForm = () => {
         if (!stripe || !elements) {
             return;
         }
+
+        setIsProcessingPayment(true);
 
         const response = await fetch("/.netlify/functions/create-payment-intent", {
             method: "POST",
@@ -41,6 +44,8 @@ const PaymentForm = () => {
             }
         });
 
+        setIsProcessingPayment(false);
+
         if (paymentResult.error) {
             alert(paymentResult.error);
         } else {
@@ -55,7 +60,7 @@ const PaymentForm = () => {
             <FormContainer onSubmit={paymentHandler}>
                 <h2>Credit Card Payment: </h2>
                 <CardElement />
-                <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
+                <Button disabled={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
             </FormContainer>
         </PaymentFormContainer>
     );
