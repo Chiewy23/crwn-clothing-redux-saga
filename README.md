@@ -3,4 +3,6 @@
 
 Redux-saga allows developers to perform complex coordination of asynchronous side effects inside of Redux.
 
-Redux-saga replaces thunk.
+Redux-saga replaces thunk ans also incorporates Stripe payment system.
+
+Deployed with Netlify.
